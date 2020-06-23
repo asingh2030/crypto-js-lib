@@ -41,9 +41,13 @@
       <h3>Given aes encrypted app key :       </h3><div id="aesAppKey"></div>
 
       <h3>RSA encrypted app Key       :       </h3><div id="rsaEncryptedAppKey"></div>
+      <h3>Given msg                   :       </h3><div id="msgStr"></div>
+      <h3>RSA encrypted message       :       </h3><div id="rsaEncryptedMsg"></div>
 
       <h3>Private key used            :       </h3><div id="privateKey"></div>
       <h3>RSA decrypted app key       :       </h3><div id="rsaDecryptedAppKey"></div>
+      <h3>Encrypted Sek               :       </h3><div id="encryptedSekDiv"></div>
+      <h3>Decrypted Sek               :       </h3><div id="decryptedSekDiv"></div>
   </div>
   <script src="lib/Base64Util.js"></script>
   <script src="lib/AESUtil.js"></script>
@@ -70,29 +74,34 @@
         //AES-256 encryption / decryption
         //Testing constants
         const keySize = 256;
-        const pass = "password";
-        const msg = "This text is for AES utility test!";
-        const aesUtil = new AESUtil(keySize, pass); //AES utility class.
-        var key = aesUtil.key;
-        const encrypted = aesUtil.encrypt(msg);
-        const decrypted = aesUtil.decrypt(encrypted);
 
-        $('#message').text(msg);
-        $('#password').text(pass);
-        $('#aesKey').text(key);
-        $('#aesEncryptedMsg').text(encrypted);
-        $('#aesDecryptedMsg').text(decrypted.toString(CryptoJS.enc.Utf8) );
+        const aesUtil = new AESUtil(keySize); //AES utility class.
+        const appKey = aesUtil.generateKey();//Generate AES app key
+
+        $('#aesKey').text(appKey);
+        //$('#aesDecryptedMsg').text(decrypted.toString(CryptoJS.enc.Utf8) );
 
         //RSA encryption and decyption
         //Testing constants
-        var pubKey ="-----BEGIN PUBLIC KEY-----";
+        /*var pubKey ="-----BEGIN PUBLIC KEY-----";
             pubKey +="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDhFCVJ8CqYv+c5NI7pV2lmR3vN";
             pubKey +="vLsEVcfiUCY7tPzcvX+YlYb9BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98";
             pubKey +="Fzt4iSzPD/c6I3qUfU9oQI5dEXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5";
             pubKey +="IF8nSE2z7AelJ2nI+wIDAQAB";
+            pubKey +="-----END PUBLIC KEY-----";*/
+
+        //Public Key provided by GST Portal
+		var pubKey ="-----BEGIN PUBLIC KEY-----";
+            pubKey +="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArxd93uLDs8HTPqcSPpxZ";
+            pubKey +="rf0Dc29r3iPp0a8filjAyeX4RAH6lWm9qFt26CcE8ESYtmo1sVtswvs7VH4Bjg/F";
+            pubKey +="DlRpd+MnAlXuxChij8/vjyAwE71ucMrmZhxM8rOSfPML8fniZ8trr3I4R2o4xWh6";
+            pubKey +="no/xTUtZ02/yUEXbphw3DEuefzHEQnEF+quGji9pvGnPO6Krmnri9H4WPY0ysPQQ";
+			pubKey +="Qd82bUZCk9XdhSZcW/am8wBulYokITRMVHlbRXqu1pOFmQMO5oSpyZU3pXbsx+Ox";
+			pubKey +="IOc4EDX0WMa9aH4+snt18WAXVGwF2B4fmBk7AtmkFzrTmbpmyVqA3KO2IjzMZPw0";
+			pubKey +="hQIDAQAB";
             pubKey +="-----END PUBLIC KEY-----";
 
-        var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
+        /*var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
             privateKey +="MIICXgIBAAKBgQDhFCVJ8CqYv+c5NI7pV2lmR3vNvLsEVcfiUCY7tPzcvX+YlYb9";
             privateKey +="BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98Fzt4iSzPD/c6I3qUfU9oQI5d";
             privateKey +="EXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5IF8nSE2z7AelJ2nI+wIDAQAB";
@@ -106,17 +115,25 @@
             privateKey +="rxBSgW6HOmWF4dlukt4gZepurZex9BT1ohLb7VB6GztkwcPHSoiXHkKnroTREyOW";
             privateKey +="DC5FtpF/iVbzsTLgoECNAkEA0HpMMcv0JUsn1bEP+hnp0UwwKqmlvrgC7Byy/1s9";
             privateKey +="x60zWyk4oasyyxOyOkIsrUdSgb+BcMQHOgOlPJtFUfd1Tw==";
-            privateKey +="-----END RSA PRIVATE KEY-----";
+            privateKey +="-----END RSA PRIVATE KEY-----";*/
 
         const rsaUtil = new RSA2AsymmetricKeyUtil(pubKey);
-        const rsaEncMsg = rsaUtil.encrypt(encrypted);
+        const appKeyRsa = rsaUtil.encrypt(appKey);
+        const pass = "Softline@1";
+        const passRsa = rsaUtil.encrypt(pass);
 
         $('#publicKey').text(pubKey);
-        $('#aesAppKey').text(encrypted);
-        $('#rsaEncryptedAppKey').text(rsaEncMsg);
+        $('#aesAppKey').text(appKey);
+        $('#rsaEncryptedAppKey').text(appKeyRsa);
+        $('#msgStr').text(pass);
+        $('#rsaEncryptedMsg').text(passRsa);
 
-        var rsaDecAppKey = rsaUtil.decrypt(rsaEncMsg, privateKey);
-        $('#privateKey').text(privateKey);
-        $('#rsaDecryptedAppKey').text(rsaDecAppKey);
+        //var rsaDecAppKey = rsaUtil.decrypt(appKeyRsa, privateKey);
+        //$('#privateKey').text(privateKey);
+        //$('#rsaDecryptedAppKey').text(rsaDecAppKey);
 
+        const encryptedSek = "g74k+f4j+7ulxNgqioM7M474BqBSpOpxLKtzGpBsVb1iqG8fGBT1srmikTg56AgF";
+        const base64DecryptedSek = aesUtil.decryptBySymetricKey(encryptedSek, appKey);
+        $('#encryptedSekDiv').text(encryptedSek);
+        $('#decryptedSekDiv').text(base64DecryptedSek);
   </script>
