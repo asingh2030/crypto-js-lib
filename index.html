@@ -12,86 +12,75 @@
 </head>
 
 <body>
-  <div>===================================================================</div>
-  <h2>Base64 encoding and decoding!</h2>
-  <div>===================================================================</div>
-  <div id="base64Encode">
-      <h3>Given text                  :       </h3><div id="text"></div>
-      <h3>Encoding  result text       :       </h3><div id="encode"></div>
-  </div>
-  <div id="base64Decode">
-      <h3>Decoding  result text       :       </h3><div id="decode"></div>
-  </div>
-  <div>===================================================================</div>
-  <h2>AES Encryption/Decryption!</h2>
-  <div>===================================================================</div>
-  <div id="aesEncrypt">
-      <h3>Given message               :       </h3><div id="message"></div>
-      <h3>Given password              :       </h3><div id="password"></div>
-      <h3>With app key                :       </h3><div id="aesKey"></div>
+<div>===================================================================</div>
+<h2>App Key!</h2>
+<div>===================================================================</div>
+<div id="appKeyDiv">
+    <h3>Generated app key           :       </h3><div id="appKey"></div>
 
-      <h3>AES encrypted message       :       </h3><div id="aesEncryptedMsg"></div>
-      <h3>AES Decrypted message       :       </h3><div id="aesDecryptedMsg"></div>
-  </div>
-  <div>===================================================================</div>
-  <h2>RSA Encryption/Decryption!</h2>
-  <div>===================================================================</div>
-  <div id="rsaEncrypt">
-      <h3>Public key used             :       </h3><div id="publicKey"></div>
-      <h3>Given aes encrypted app key :       </h3><div id="aesAppKey"></div>
+</div>
+<div>===================================================================</div>
+<h2>RSA Encryption/Decryption!</h2>
+<div>===================================================================</div>
+<div id="rsaEncrypt">
+    <h3>Public key used             :       </h3><div id="publicKey"></div>
+    <h3>Given app key               :       </h3><div id="aesAppKey"></div>
 
-      <h3>RSA encrypted app Key       :       </h3><div id="rsaEncryptedAppKey"></div>
-      <h3>Given msg                   :       </h3><div id="msgStr"></div>
-      <h3>RSA encrypted message       :       </h3><div id="rsaEncryptedMsg"></div>
+    <h3>RSA encrypted app Key       :       </h3><div id="rsaEncryptedAppKey"></div>
+    <h3>Given msg                   :       </h3><div id="msgStr"></div>
+    <h3>RSA encrypted message       :       </h3><div id="rsaEncryptedMsg"></div>
 
-      <h3>Private key used            :       </h3><div id="privateKey"></div>
-      <h3>RSA decrypted app key       :       </h3><div id="rsaDecryptedAppKey"></div>
-      <h3>Encrypted Sek               :       </h3><div id="encryptedSekDiv"></div>
-      <h3>Decrypted Sek               :       </h3><div id="decryptedSekDiv"></div>
-  </div>
-  <script src="lib/Base64Util.js"></script>
-  <script src="lib/AESUtil.js"></script>
-  <script src="lib/RSA2AsymmetricKeyUtil.js"></script>
+    <h3>Private key used            :       </h3><div id="privateKey"></div>
+    <h3>RSA decrypted message       :       </h3><div id="rsaDecryptedMsg"></div>
+    <h3>RSA decrypted app key       :       </h3><div id="rsaDecryptedAppKey"></div>
+</div>
+<div>===================================================================</div>
+<h2>AES Encryption/Decryption!</h2>
+<div>===================================================================</div>
+<div id="aesEncrypt">
+    <h3>Sek                         :       </h3><div id="sekDiv"></div>
+    <h3>Encrypted Sek               :       </h3><div id="encryptedSekDiv"></div>
+    <h3>Decrypted Sek               :       </h3><div id="decryptedSekDiv"></div>
+    <h3>Given JSON                  :       </h3><div id="jsonDiv"></div>
+    <h3>Encrypted JSON              :       </h3><div id="encryptedJsonDiv"></div>
+    <h3>Decrypted JSON              :       </h3><div id="decryptedJsonDiv"></div>
+    <h3>Given Data                  :       </h3><div id="dataDiv"></div>
+    <h3>encrypted Data              :       </h3><div id="encryptedDataDiv"></div>
+    <h3>Decrypted Data              :       </h3><div id="decryptedDataDiv"></div>
+</div>
+<script src="lib/Base64Util.js"></script>
+<script src="lib/AESUtil.js"></script>
+<script src="lib/RSA2AsymmetricKeyUtil.js"></script>
 </body>
 </html>
 
 
 
 
+
+
+
 <script>
-        //Base64 encoding and decoding
-        //Testing constant
-        const text = "testing for Base64 parsing!"; //Do change value to test with different input
-
-        const base64Util = new Base64Util();
-        const textEnc = base64Util.encodeText(text);
-        const textDec = base64Util.decodeText(textEnc);
-
-        $('#text').text(text);
-        $('#encode').text(textEnc);
-        $('#decode').text(textDec);
-
-        //AES-256 encryption / decryption
+        //Generate App Key
         //Testing constants
         const keySize = 256;
 
         const aesUtil = new AESUtil(keySize); //AES utility class.
         const appKey = aesUtil.generateKey();//Generate AES app key
 
-        $('#aesKey').text(appKey);
-        //$('#aesDecryptedMsg').text(decrypted.toString(CryptoJS.enc.Utf8) );
+        $('#appKey').text(appKey);
 
         //RSA encryption and decyption
         //Testing constants
-        /*var pubKey ="-----BEGIN PUBLIC KEY-----";
+        var pubKey ="-----BEGIN PUBLIC KEY-----";
             pubKey +="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDhFCVJ8CqYv+c5NI7pV2lmR3vN";
             pubKey +="vLsEVcfiUCY7tPzcvX+YlYb9BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98";
             pubKey +="Fzt4iSzPD/c6I3qUfU9oQI5dEXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5";
             pubKey +="IF8nSE2z7AelJ2nI+wIDAQAB";
-            pubKey +="-----END PUBLIC KEY-----";*/
+            pubKey +="-----END PUBLIC KEY-----";
 
         //Public Key provided by GST Portal
-		var pubKey ="-----BEGIN PUBLIC KEY-----";
+		/*var pubKey ="-----BEGIN PUBLIC KEY-----";
             pubKey +="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArxd93uLDs8HTPqcSPpxZ";
             pubKey +="rf0Dc29r3iPp0a8filjAyeX4RAH6lWm9qFt26CcE8ESYtmo1sVtswvs7VH4Bjg/F";
             pubKey +="DlRpd+MnAlXuxChij8/vjyAwE71ucMrmZhxM8rOSfPML8fniZ8trr3I4R2o4xWh6";
@@ -99,9 +88,9 @@
 			pubKey +="Qd82bUZCk9XdhSZcW/am8wBulYokITRMVHlbRXqu1pOFmQMO5oSpyZU3pXbsx+Ox";
 			pubKey +="IOc4EDX0WMa9aH4+snt18WAXVGwF2B4fmBk7AtmkFzrTmbpmyVqA3KO2IjzMZPw0";
 			pubKey +="hQIDAQAB";
-            pubKey +="-----END PUBLIC KEY-----";
+            pubKey +="-----END PUBLIC KEY-----";*/
 
-        /*var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
+        var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
             privateKey +="MIICXgIBAAKBgQDhFCVJ8CqYv+c5NI7pV2lmR3vNvLsEVcfiUCY7tPzcvX+YlYb9";
             privateKey +="BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98Fzt4iSzPD/c6I3qUfU9oQI5d";
             privateKey +="EXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5IF8nSE2z7AelJ2nI+wIDAQAB";
@@ -115,25 +104,55 @@
             privateKey +="rxBSgW6HOmWF4dlukt4gZepurZex9BT1ohLb7VB6GztkwcPHSoiXHkKnroTREyOW";
             privateKey +="DC5FtpF/iVbzsTLgoECNAkEA0HpMMcv0JUsn1bEP+hnp0UwwKqmlvrgC7Byy/1s9";
             privateKey +="x60zWyk4oasyyxOyOkIsrUdSgb+BcMQHOgOlPJtFUfd1Tw==";
-            privateKey +="-----END RSA PRIVATE KEY-----";*/
+            privateKey +="-----END RSA PRIVATE KEY-----";
 
         const rsaUtil = new RSA2AsymmetricKeyUtil(pubKey);
-        const appKeyRsa = rsaUtil.encrypt(appKey);
+        const encryptedAppKey = rsaUtil.encrypt(appKey);
         const pass = "Softline@1";
         const passRsa = rsaUtil.encrypt(pass);
 
         $('#publicKey').text(pubKey);
         $('#aesAppKey').text(appKey);
-        $('#rsaEncryptedAppKey').text(appKeyRsa);
+        $('#rsaEncryptedAppKey').text(encryptedAppKey);
         $('#msgStr').text(pass);
         $('#rsaEncryptedMsg').text(passRsa);
 
-        //var rsaDecAppKey = rsaUtil.decrypt(appKeyRsa, privateKey);
-        //$('#privateKey').text(privateKey);
-        //$('#rsaDecryptedAppKey').text(rsaDecAppKey);
+        $('#privateKey').text(privateKey);
+        var decryptedMsg = rsaUtil.decrypt(passRsa, privateKey);
+        var decryptedAppKey = rsaUtil.decrypt(encryptedAppKey, privateKey);
+        $('#rsaDecryptedMsg').text(decryptedMsg);
+        $('#rsaDecryptedAppKey').text(decryptedAppKey);
 
-        const encryptedSek = "g74k+f4j+7ulxNgqioM7M474BqBSpOpxLKtzGpBsVb1iqG8fGBT1srmikTg56AgF";
-        const base64DecryptedSek = aesUtil.decryptBySymetricKey(encryptedSek, appKey);
+        //AES encryption and decryption
+        //Testing constants
+        const sek = "testSek";
+        $('#sekDiv').text(sek);
+        const encryptedSek = aesUtil.encryptByAppKey(sek, appKey);
+        const decryptedSek = aesUtil.decryptBySymetricKey(encryptedSek, appKey);
         $('#encryptedSekDiv').text(encryptedSek);
-        $('#decryptedSekDiv').text(base64DecryptedSek);
+        $('#decryptedSekDiv').text(decryptedSek);
+
+        const jsonObj = {
+                           key1 : "value1",
+                           key2 : "value2"
+                        };
+        const jsonStr = JSON.stringify(jsonObj);
+        $('#jsonDiv').text(jsonStr);
+        var encryptedJSON = aesUtil.encryptBySymmetricKey(jsonStr, decryptedSek);
+        $('#encryptedJsonDiv').text(encryptedJSON);
+        var decryptedJson = aesUtil.decryptDataBySymmentricKey(encryptedJSON, decryptedSek);
+        $('#decryptedJsonDiv').text(decryptedJson);
+
+        const dataObj = {
+                            dataKey1 : "dataValue1",
+                            dataKey2 : "dataValue2"
+                        };
+        const data = JSON.stringify(dataObj);
+        $('#dataDiv').text(data);
+        var encryptedData = aesUtil.encryptBySymmetricKey(data, decryptedSek);
+        $('#encryptedDataDiv').text(encryptedData);
+        var decryptedData = aesUtil.decryptDataBySymmentricKey(encryptedData, decryptedSek);
+        $('#decryptedDataDiv').text(decryptedData);
+
+
   </script>
