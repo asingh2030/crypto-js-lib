@@ -66,7 +66,8 @@
         const keySize = 256;
 
         const aesUtil = new AESUtil(keySize); //AES utility class.
-        const appKey = aesUtil.generateKey();//Generate AES app key
+        //const appKey = aesUtil.generateKey();//Generate AES app key
+        let appKey = aesUtil.generateKey();//Generate AES app key
 
         $('#appKey').text(appKey);
 
@@ -77,10 +78,10 @@
             pubKey +="vLsEVcfiUCY7tPzcvX+YlYb9BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98";
             pubKey +="Fzt4iSzPD/c6I3qUfU9oQI5dEXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5";
             pubKey +="IF8nSE2z7AelJ2nI+wIDAQAB";
-            pubKey +="-----END PUBLIC KEY-----";
+            pubKey +="-----END PUBLIC KEY-----";// Old key
 
         //Public Key provided by GST Portal
-		/*var pubKey ="-----BEGIN PUBLIC KEY-----";
+		var pubKey ="-----BEGIN PUBLIC KEY-----";
             pubKey +="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArxd93uLDs8HTPqcSPpxZ";
             pubKey +="rf0Dc29r3iPp0a8filjAyeX4RAH6lWm9qFt26CcE8ESYtmo1sVtswvs7VH4Bjg/F";
             pubKey +="DlRpd+MnAlXuxChij8/vjyAwE71ucMrmZhxM8rOSfPML8fniZ8trr3I4R2o4xWh6";
@@ -88,9 +89,26 @@
 			pubKey +="Qd82bUZCk9XdhSZcW/am8wBulYokITRMVHlbRXqu1pOFmQMO5oSpyZU3pXbsx+Ox";
 			pubKey +="IOc4EDX0WMa9aH4+snt18WAXVGwF2B4fmBk7AtmkFzrTmbpmyVqA3KO2IjzMZPw0";
 			pubKey +="hQIDAQAB";
-            pubKey +="-----END PUBLIC KEY-----";*/
+            pubKey +="-----END PUBLIC KEY-----";
 
-        var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
+        /*var privateKey = "-----BEGIN PRIVATE KEY-----";
+               privateKey +="MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAOEUJUnwKpi/5zk0";
+               privateKey +="julXaWZHe828uwRVx+JQJju0/Ny9f5iVhv0F5ZcLbegApYXNmbKQHbj2yScaQNu6";
+               privateKey +="ARWW4CvrH3wXO3iJLM8P9zojepR9T2hAjl0ReHHzau/TvKBUlGIW+k1pRwbcB/6a";
+               privateKey +="mqHsexiCQDkgXydITbPsB6Unacj7AgMBAAECgYA/+4AWIqWZQoQyaNRvVJ/rqUpy";
+               privateKey +="U8I+Gzx1Ax+7PVncTiolb+wtpS184IzftL9Y5/dXIUyxtcW8zeO+EoQYZQlYKije";
+               privateKey +="fhyd8c27Jvku5ZFFqW9b1FjY1OW3rwqXnBYvz9yj3CwqMSi62ND2zF0o4Gwehu4B";
+               privateKey +="fsLisEdxug33q1+aEQJBAPpAlggoIp+u3Lr38/Nc4gpRyGJNLFSxFePU3LGSsXQ3";
+               privateKey +="eWqcebtnHpb28wAmKtM/la66JDDWVRn8nzqCg/uK4bUCQQDmP4u83CZcidVbEPJ+";
+               privateKey +="Ril3ZsFfmxHSs8i3axxNpN0tTtBsKrtWxQ6IIGnSoT6nt0B/FwviJS1FA/b21dJ4";
+               privateKey +="a23vAkEAoa26gLiVbf9GQlFRvcgjjbE6ui/L1Ue3scNjdiIlHcV9XyCLEUVVIQmZ";
+               privateKey +="A16lSmgJJ6LBIQBIaQqqQN3zsT8QBQJBAIOvEFKBboc6ZYXh2W6S3iBl6m6tl7H0";
+               privateKey +="FPWiEtvtUHobO2TBw8dKiJceQqeuhNETI5YMLkW2kX+JVvOxMuCgQI0CQQDQekwx";
+               privateKey +="y/QlSyfVsQ/6GenRTDAqqaW+uALsHLL/Wz3HrTNbKTihqzLLE7I6QiytR1KBv4Fw";
+               privateKey +="xAc6A6U8m0VR93VP";
+               privateKey +="-----END PRIVATE KEY-----";*/
+
+        /*var privateKey = "-----BEGIN RSA PRIVATE KEY-----";
             privateKey +="MIICXgIBAAKBgQDhFCVJ8CqYv+c5NI7pV2lmR3vNvLsEVcfiUCY7tPzcvX+YlYb9";
             privateKey +="BeWXC23oAKWFzZmykB249sknGkDbugEVluAr6x98Fzt4iSzPD/c6I3qUfU9oQI5d";
             privateKey +="EXhx82rv07ygVJRiFvpNaUcG3Af+mpqh7HsYgkA5IF8nSE2z7AelJ2nI+wIDAQAB";
@@ -104,9 +122,10 @@
             privateKey +="rxBSgW6HOmWF4dlukt4gZepurZex9BT1ohLb7VB6GztkwcPHSoiXHkKnroTREyOW";
             privateKey +="DC5FtpF/iVbzsTLgoECNAkEA0HpMMcv0JUsn1bEP+hnp0UwwKqmlvrgC7Byy/1s9";
             privateKey +="x60zWyk4oasyyxOyOkIsrUdSgb+BcMQHOgOlPJtFUfd1Tw==";
-            privateKey +="-----END RSA PRIVATE KEY-----";
+            privateKey +="-----END RSA PRIVATE KEY-----";*///Old Key
 
         const rsaUtil = new RSA2AsymmetricKeyUtil(pubKey);
+        //const appKeyBase64 = CryptoJS.enc.Base64.parse(appKey);
         const encryptedAppKey = rsaUtil.encrypt(appKey);
         const pass = "Softline@1";
         const passRsa = rsaUtil.encrypt(pass);
@@ -125,17 +144,98 @@
 
         //AES encryption and decryption
         //Testing constants
-        const sek = "testSek";
-        $('#sekDiv').text(sek);
-        const encryptedSek = aesUtil.encryptByAppKey(sek, appKey);
+        //const sek = "testSek";
+        //$('#sekDiv').text(sek);
+        //const encryptedSek = aesUtil.encryptByAppKey(sek, appKey);
+        const encryptedSek = "ctgF9IqXj3H8zNqYnNFmYJVVTt+g+Sic8FWX9H4yfaLVHeCqVbon8VTwqU4ue6lu";
+        appKey = "vrRXObL/IqjfVn70Y6TkqQ==";
         const decryptedSek = aesUtil.decryptBySymetricKey(encryptedSek, appKey);
         $('#encryptedSekDiv').text(encryptedSek);
         $('#decryptedSekDiv').text(decryptedSek);
 
-        const jsonObj = {
+        /*const jsonObj = {
                            key1 : "value1",
                            key2 : "value2"
+                        };*/
+        const jsonObj = {
+                           "Version":"1.01",
+                           "TranDtls":{
+                              "EcmTrn":"N",
+                              "SupTyp":"B2B",
+                              "TaxSch":"GST"
+                           },
+                           "DocDtls":{
+                              "Dt":"14/07/2020",
+                              "No":"DOC/1/14",
+                              "Typ":"INV"
+                           },
+                           "SellerDtls":{
+                              "Addr1":"test",
+                              "Addr2":"test",
+                              "Em":"test@gmail.com",
+                              "Gstin":"29AAUCS4616H1ZS",
+                              "LglNm":"nictest",
+                              "Loc":"test",
+                              "Ph":"9999999999",
+                              "Pin":"518001",
+                              "State":"ANDHRA PRADESH",
+                              "TrdNm":"nictest"
+                           },
+                           "BuyerDtls":{
+                              "Addr1":"562160",
+                              "Addr2":"RAMANAGARA",
+                              "Em":"test@gmail.com",
+                              "Gstin":"29AWGPV7107B1Z1",
+                              "LglNm":"VIKAS EXPORTS",
+                              "Loc":"CHANNAPATNA",
+                              "Ph":"9999999999",
+                              "Pin":"562160",
+                              "Pos":"29",
+                              "State":"KARNATAKA",
+                              "TrdNm":"VIKAS EXPORTS"
+                           },
+                           "ItemList":[
+                              {
+                                 "AssAmt":9898.01,
+                                 "CesAmt":98.98,
+                                 "CesNonAdvlAmt":99.99,
+                                 "CesRt":1.0,
+                                 "CgstAmt":0.0,
+                                 "Discount":99.99,
+                                 "GstRt":0.1,
+                                 "HsnCd":"1001",
+                                 "IgstAmt":9.89,
+                                 "IsServc":"N",
+                                 "OthChrg":99.99,
+                                 "PrdDesc":"pdt desc",
+                                 "Qty":"99.99",
+                                 "SgstAmt":0.0,
+                                 "SlNo":"1",
+                                 "StateCesAmt":2474.5,
+                                 "StateCesNonAdvlAmt":0.0,
+                                 "StateCesRt":25.0,
+                                 "TotAmt":9998.0,
+                                 "TotItemVal":12681.36,
+                                 "Unit":"BAG",
+                                 "UnitPrice":99.99
+                              }
+                           ],
+                           "PayDtls":{
+
+                           },
+                           "ValDtls":{
+                              "AssVal":9898.01,
+                              "CesVal":198.97,
+                              "CgstVal":0.0,
+                              "IgstVal":9.89,
+                              "OthChrg":0.0,
+                              "RndOffAmt":0.0,
+                              "SgstVal":0.0,
+                              "StCesVal":2474.5,
+                              "TotInvVal":12681.36
+                           }
                         };
+
         const jsonStr = JSON.stringify(jsonObj);
         $('#jsonDiv').text(jsonStr);
         var encryptedJSON = aesUtil.encryptBySymmetricKey(jsonStr, decryptedSek);
@@ -143,13 +243,7 @@
         var decryptedJson = aesUtil.decryptDataBySymmentricKey(encryptedJSON, decryptedSek);
         $('#decryptedJsonDiv').text(decryptedJson);
 
-        const dataObj = {
-                            dataKey1 : "dataValue1",
-                            dataKey2 : "dataValue2"
-                        };
-        const data = JSON.stringify(dataObj);
-        $('#dataDiv').text(data);
-        var encryptedData = aesUtil.encryptBySymmetricKey(data, decryptedSek);
+        var encryptedData = "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";
         $('#encryptedDataDiv').text(encryptedData);
         var decryptedData = aesUtil.decryptDataBySymmentricKey(encryptedData, decryptedSek);
         $('#decryptedDataDiv').text(decryptedData);
